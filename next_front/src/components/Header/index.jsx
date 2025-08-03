@@ -20,6 +20,18 @@ const index = () => {
             登録
           </Link>
         </li>
+        <li>
+          <Link href="/timeline">
+            <AirplanemodeActiveIcon />
+            タイムライン
+          </Link>
+        </li>
+        <li>
+          <Link href="/construction">
+            <AirplanemodeActiveIcon />
+            作成中
+          </Link>
+        </li>
       </ul>
 
     </div>

@@ -1,11 +1,13 @@
 import React from 'react'
 import styles from "./style.module.scss"
-import g_styles from "@/styles/style.module.scss"
+import g_styles from "@/styles/errors.module.scss"
 import Link from 'next/link'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { useForm } from 'react-hook-form'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import apiClient from "@/lib/apiClient";
+import { useRouter } from "next/navigation"; 
 
 const signupSchema = z.object({
   name: z.string()
@@ -19,7 +21,7 @@ const signupSchema = z.object({
     .min(6, "パスワードは6文字以上にしてください")
 });
 
-const Login = () => {
+const SignUp = () => {
   const {
     handleSubmit,
     register,
@@ -35,14 +37,31 @@ const Login = () => {
     }
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-  }
+  // 画面遷移するためにuseRouterを使えるように準備する
+  const router = useRouter();
+
+  //登録処理
+  const handleSignup = async () => {
+    try {
+      const response = await apiClient.post("/api/auth/register", {
+        username,
+        email,
+        password,
+      });
+      //登録成功後にログイン画面に遷移する
+      setTimeout(() => {
+        router.push("/");
+
+      }, 2000);
+    } catch (error) {
+      console.log(error, "error");
+      alert("エラーが発生しました。apiサーバーの状態・設定が正しいか確認してください");
+    }
+  };
 
   return (
     <div className={styles.form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSignup)}>
         <h3 className={styles.form__title}>アカウント作成</h3>
 
         <div className={styles.form__item}>
@@ -94,4 +113,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

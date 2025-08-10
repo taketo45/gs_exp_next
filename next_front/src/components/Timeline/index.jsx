@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "./style.module.scss"
-import g_styles from "@/styles/style.module.scss"
+import g_styles from "@/styles/errors.module.scss"
 import Link from 'next/link'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { Button } from '@mui/material';

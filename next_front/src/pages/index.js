@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 // import styles from "@/styles/Home.module.css";
 import styles from "@/styles/style.module.scss"
@@ -5,8 +6,38 @@ import Header from "@/components/Header"
 import Timeline from "@/components/Timeline";
 import Post from "@/components/Post";
 import { mockData } from "@/mock/data";
+import { useRouter } from "next/navigation"
+import apiClient from "@/lib/apiClient";
 
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    //バックエンドの実装時にコメントを解除する
+    // if(!token) {
+    //   router.push("/login");
+    //   console.log("tokenが取得できないのでloginへ遷移");
+    //   return;
+    // }
+
+    const fetchPosts = async () => {
+      try {
+        const response = apiClient.get("/api/posts");
+        console.log(response, "取得データのチェック"); //今はバックエンド作っていないので見えない
+
+        setPosts(response.data);
+      } catch(error) { 
+        console.log("投稿の取得に失敗しました", error);
+      }
+    };
+
+    fetchPosts();
+
+  },[]);
+
   return (
     <>
       <Head>

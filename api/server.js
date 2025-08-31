@@ -3,8 +3,8 @@ const express = require("express");
 
 const app = express();
 
-// const { PrismaClient } = require("@prisma/client");
-const { PrismaClient } = require("./generated/prisma");
+const { PrismaClient } = require("@prisma/client");
+// const { PrismaClient } = require("./generated/prisma");
 // import { PrismaClient } from './generated/prisma'
 
 const PORT = 8888;

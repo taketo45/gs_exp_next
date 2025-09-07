@@ -16,16 +16,16 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    //バックエンドの実装時にコメントを解除する
-    // if(!token) {
-    //   router.push("/login");
-    //   console.log("tokenが取得できないのでloginへ遷移");
-    //   return;
-    // }
+    // バックエンドの実装時にコメントを解除する
+    if(!token) {
+      router.push("/login");
+      console.log("tokenが取得できないのでloginへ遷移");
+      return;
+    }
 
     const fetchPosts = async () => {
       try {
-        const response = apiClient.get("/api/posts");
+        const response = await apiClient.get("/api/posts");
         console.log(response, "取得データのチェック"); //今はバックエンド作っていないので見えない
 
         setPosts(response.data);
@@ -48,15 +48,14 @@ export default function Home() {
       </Head>
       <main className={styles.container}>
         <Header /> 
-        <Timeline />
+        <Timeline setPosts={setPosts}/>
         <div>
-          {mockData && mockData.map((item, index)=>(
+          {posts && posts.map((item, index)=>(
             <Post 
               key={index}
-              name={item.name}
-              date={item.date}
               content={item.content}
-              link={item.link}
+              createdAt={item.createdAt}
+              author={item.author}
             />
             ))}
         </div>

@@ -31,16 +31,16 @@ const Login = () => {
     },
   });
   
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-  
   const router = useRouter();
-  const handleLogin = async () => {
+
+  // useStateを
+
+
+  const onSubmit = async (data) => {
     try {
       const response = await apiClient.post("/api/auth/login", {
-        email,
-        password,
+        email: data.email,
+        password: data.password,
       });
       localStorage.setItem("token", response.data.token);
       router.push("/");
@@ -57,17 +57,27 @@ const Login = () => {
 
         <div className={styles.form__item}>
           <label htmlFor="">メールアドレス</label>
-          <input id="email" name="email" type="text" placeholder="メールアドレスを入力してください" {...register("email")} />
+          <input
+           id="email"
+           name="email"
+           type="text"
+           placeholder="メールアドレスを入力してください" {...register("email")} 
+          />
           {errors.email && <span className={g_styles.validation}>{errors.email.message}</span>}
         </div>
 
         <div className={styles.form__item}>
           <label htmlFor="">パスワード</label>
-          <input id="password" name="password" type="text" placeholder="パスワードを入力してください" {...register("password")} />
+          <input 
+           id="password" 
+           name="password" 
+           type="text" 
+           placeholder="パスワードを入力してください" {...register("password")} 
+          />
           {errors.password && <span className={g_styles.validation}>{errors.password.message}</span>}
         </div>
 
-        <button onClick={handleLogin} className={styles.form__btn}>
+        <button className={styles.form__btn}>
           <AutoAwesomeIcon style={{ color: "green" }} />
           ログイン
         </button>

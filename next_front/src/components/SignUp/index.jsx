@@ -41,14 +41,15 @@ const SignUp = () => {
   const router = useRouter();
 
   //登録処理
-  const handleSignup = async () => {
+  const handleSignup = async (data) => {
     try {
       const response = await apiClient.post("/api/auth/register", {
-        username,
-        email,
-        password,
+        username: data.name,
+        email: data.email,
+        password: data.password,
       });
       //登録成功後にログイン画面に遷移する
+      localStorage.setItem("token", response.data.token);
       setTimeout(() => {
         router.push("/");
 
@@ -93,7 +94,7 @@ const SignUp = () => {
           <input
             id="password"
             name="password"
-            type="text" 
+            type="password" 
             placeholder="パスワードを入力してください" 
             {...register("password")}
           />

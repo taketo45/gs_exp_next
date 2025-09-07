@@ -4,16 +4,15 @@ import Link from 'next/link'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import { Button } from '@mui/material';
 
-const Post = ({name, date, content, link}) => {
+const Post = ({content, createdAt, author}) => {
   const handleSubmit = () => {
     
   }
   return (
     <div className={styles.post}>
-      <p>{name}</p>
-      <p>{date}</p>
+      <p>{new Date(createdAt).toLocaleDateString()}</p>
       <p>{content}</p>
-      <p className={styles.link}>{link}</p>
+      <p>{author.username}</p>
     </div>
   );
 };
